@@ -1,0 +1,316 @@
+<div class="container">
+  <div class="homespacer"></div>
+  <div class="row">
+    <div class="col-md-10">
+      <h3 class="text-left">Admin Panel</h3>
+    </div>    
+  </div>
+  &nbsp;
+  <div class="row">
+      <div class="col-md-3">
+        <ul class="side-bar">
+            <li class="side-menu" [ngClass]="{'active':adminSelect == 1}" (click)="adminSelect = 1"><i class="fa fa-fw fa-users"></i> Users</li>
+            <li class="side-menu" [ngClass]="{'active':adminSelect == 2}" (click)="adminSelect = 2"><i class="fa fa-fw fa-globe"></i> Sports</li>
+            <li class="side-menu" [ngClass]="{'active':adminSelect == 3}" (click)="adminSelect = 3"><i class="fa fa-fw fa-flag"></i> Court</li>
+        </ul>
+        <br>
+      </div>
+      <div class="col-md-9">
+            <div class="table-responsive" *ngIf="adminSelect == 1">
+                <h4 _ngcontent-c2="" class="portlet-title">
+                  <u _ngcontent-c2="">Users</u>
+                  <span _ngcontent-c2="" class="pull-right">
+                    <!-- <button _ngcontent-c2="" class="btn-sm myButton" title="Add URL">+ Add URL
+
+                    </button> -->
+                  </span>
+                </h4>
+              <div id="table-1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                <div class="row dt-rt">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+                </div>
+                <!-- <button _ngcontent-c2="" class="btn-sm myButton" title="Add URL">+ Add URL</button> -->
+                <table class="table table-striped table-bordered dataTable" id="table-1">
+                  <thead>
+                    <tr role="row">
+                      <!-- <th class="text-left" role="columnheader" style="width: 37px;">
+            
+                      </th> -->
+                      <th class="sorting_asc" role="columnheader" style="width: 280px;">User Name</th>
+                      <th class="text-center linksTD2 sorting" role="columnheader" style="width: 110px;">Status</th>
+                      <th class="text-center linksTD3 sorting" role="columnheader" style="width: 62px;">Created On</th>
+                      <th class="text-center linksTD3 sorting" role="columnheader" style="width: 200px;"></th>
+                    </tr>
+                  </thead>
+            
+                  <tbody id="linkList" role="alert">
+                    <tr *ngFor="let item of userList; let i = index" [class]="i % 2 == 0 ? 'odd' : 'even'">
+                        <!-- <td class="text-center valign-middle linksTD1">
+                            <input data-id="103932" type="checkbox" value="false">
+                          </td> -->
+                          <td class="valign-middle" style="min-width:280px">
+                            <div class="divURL margin-top">
+                              {{ item.UserName }}
+                            </div>
+                          </td>
+                          <td class="text-center valign-middle linksTD2">
+                              <div class="margin-top">
+                                {{ item.Status ? 'Active' : 'Inactive' }}
+                              </div>
+                            </td>
+                            <td class="text-center valign-middle linksTD3">
+                                <div class="margin-top">
+                                    {{ item.CreatedOn |  date:'MM/dd/yyyy hh:mm a' }}
+                                </div>                
+                              </td>
+                          <td class="text-center valign-middle linksTD3 ">
+                            <button type="button" (click)="item.Status ? inActiveUser(item.Id) : activeUser(item.Id)" [title]="item.Status ? 'Deactivate' : 'Activate'" class="btn-sm myButton">{{ item.Status ? 'Deactivate' : 'Activate' }}</button>
+                            &nbsp;
+                            <button type="button" (click)="deleteUser(deleteUserModal, item.Id)" title="Delete" class="btn-sm redButton">Delete</button>
+                          </td>
+                    </tr>
+                    <tr *ngIf="!userList || userList.length == 0" class="odd">
+                      <td colspan="4">
+                        No record
+                      </td>                     
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="row dt-rb">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+                </div>
+              </div>
+            </div>
+             
+            <div class="table-responsive" *ngIf="adminSelect == 2">
+                <h4 _ngcontent-c2="" class="portlet-title">
+                    <u _ngcontent-c2="">Sports</u>
+                    <span _ngcontent-c2="" class="pull-right">
+                      <button _ngcontent-c2="" class="btn-sm myButton"  (click)="OpenAddSport(addSportModal)" title="Add URL">+ Add Sport
+    
+                      </button>
+                    </span>
+                  </h4>
+              <div id="table-1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                <div class="row dt-rt">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+                </div>
+                <table class="table table-striped table-bordered dataTable" id="table-1">
+                  <thead>
+                    <tr role="row">
+                      <!-- <th class="text-left" role="columnheader" style="width: 37px;">
+            
+                      </th> -->
+                      <th class="sorting_asc" role="columnheader" style="width: 100px;">Sport Name</th>
+                      <th class="text-center linksTD2 sorting" role="columnheader" style="width: 50px;">User Name</th>
+                      <th class="text-center linksTD3 sorting" role="columnheader" style="width: 60px;">Created On</th>
+                      <th class="text-center linksTD3 sorting" role="columnheader" style="width: 60px;">Status</th>
+                      <th class="text-center linksTD3 sorting" role="columnheader" style="width: 200px;"></th>
+                    </tr>
+                  </thead>
+            
+                  <tbody id="linkList" role="alert">
+                    <tr *ngFor="let item of sportList; let i = index" [class]="i % 2 == 0 ? 'odd' : 'even'">
+                        <!-- <td class="text-center valign-middle linksTD1">
+                            <input data-id="103932" type="checkbox" value="false">
+                          </td> -->
+                          <td class="valign-middle" style="min-width: 100px">
+                            <div class="divURL margin-top">
+                              <a [href]="item.URLAddress" target="_blank">{{ item.Sport_Name }}</a>
+                            </div>
+                          </td>
+                          <td class="text-center valign-middle linksTD3">
+                            <div class="margin-top">
+                              {{ item.CreatedBy }}
+                            </div>
+                          </td>
+                          <td class="text-center valign-middle linksTD2">
+                            <div class="margin-top">
+                                {{ item.Created_Date |  date:'MM/dd/yyyy hh:mm a' }}
+                            </div>                
+                          </td>                          
+                          <td class="text-center valign-middle linksTD3">
+                              <div class="margin-top">
+                                {{ item.Status ? 'Enable' : 'Disable' }}
+                              </div>
+                            </td>
+                          <td class="text-center valign-middle linksTD3">
+                            <button type="button" (click)="item.Status ? disableSport(item.Sport_ID) : enableSport(item.Sport_ID)" [title]="item.Status ? 'Disable' : 'Enable'" class="btn-sm myButton">{{ item.Status ? 'Disable' : 'Enable' }}</button>
+                            &nbsp;
+                            <button type="button" (click)="deleteSport(deleteSportModal, item.Sport_ID)" title="Delete" class="btn-sm redButton">Delete</button>
+                          </td>
+                    </tr>
+                    <tr *ngIf="!sportList || sportList.length == 0" class="odd">
+                      <td colspan="4">
+                        No record1
+                      </td>                     
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="row dt-rb">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive" *ngIf="adminSelect == 3">
+                <h4 _ngcontent-c2="" class="portlet-title">
+                    <u _ngcontent-c2="">Courts</u>
+                    <span _ngcontent-c2="" class="pull-right">
+                      <button _ngcontent-c2="" class="btn-sm myButton" title="Add URL">+ Add Court
+    
+                      </button>
+                    </span>
+                  </h4>
+              <div id="table-1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                <div class="row dt-rt">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+                </div>
+                <table class="table table-striped table-bordered dataTable" id="table-1">
+                  <thead>
+                    <tr role="row">
+                      <!-- <th class="text-left" role="columnheader" style="width: 37px;">
+            
+                      </th> -->
+                      <th class="sorting_asc" role="columnheader" style="width: 280px;">Court</th>
+                      <th class="text-center linksTD2 sorting" role="columnheader" style="width: 110px;">Sport</th>
+                      <th class="text-center linksTD3 sorting" role="columnheader" style="width: 62px;">Time</th>
+                      <th class="text-center linksTD3 sorting" role="columnheader" style="width: 62px;">Limit</th>
+                      <th class="text-center linksTD3 sorting" role="columnheader" style="width: 62px;">Created On</th>
+                      <th class="text-center linksTD3 sorting" role="columnheader" style="width: 150px;"></th>
+                    </tr>
+                  </thead>
+            
+                  <tbody id="linkList" role="alert">
+                    <tr *ngFor="let item of courtList; let i = index" [class]="i % 2 == 0 ? 'odd' : 'even'">
+                        <!-- <td class="text-center valign-middle linksTD1">
+                            <input data-id="103932" type="checkbox" value="false">
+                          </td> -->
+                          <td class="valign-middle" style="min-width:280px">
+                            <div class="divURL margin-top">
+                              <a [href]="item.URLAddress" target="_blank">{{ item.Court_Name }}</a>
+                            </div>
+                          </td>                          
+                          <td class="text-center valign-middle linksTD2">
+                              <div class="margin-top">
+                                {{ item.SportName }}
+                              </div>
+                            </td>
+                          <td class="text-center valign-middle linksTD3">
+                              <div class="margin-top">
+                                {{ item.Court_Time }}
+                              </div>
+                            </td>
+                            <td class="text-center valign-middle linksTD3">
+                              <div class="margin-top">
+                                {{ item.Court_Limt }}
+                              </div>
+                            </td>
+                            <td class="text-center valign-middle linksTD3">
+                              <div class="margin-top">
+                                  {{ item.Court_Created_Date |  date:'hh:mm a' }}
+                              </div>                
+                            </td>
+                          <td class="text-center valign-middle linksTD3 ">
+                            <button type="button" (click)="resolveReport(resolveUrlModal, item.Id)" [title]="item.Status ? 'Disable' : 'Enable'" class="btn-sm myButton">Resolve</button>
+                            &nbsp;
+                            <button type="button" (click)="deleteReportUrl(deleteReportUrlModal, item.Id)" title="Delete" class="btn-sm redButton">Delete URL</button>
+                          </td>
+                    </tr>
+                    <tr *ngIf="!reportList || reportList.length == 0" class="odd">
+                      <td colspan="5">
+                        No record
+                      </td>                     
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="row dt-rb">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+                </div>
+              </div>
+            </div>
+      </div>
+  </div>
+
+</div>
+
+<ng-template #deleteUserModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="row">
+        <div class="col-md-12">
+            <p class="p-style">
+              Are you sure, you want to delete this User?
+            </p>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" title="Delete" (click)="c('SaveClick')" class="btn-sm redButton">Delete</button>
+      <button type="button" title="Cancel" (click)="d('Cancel')" class="btn-sm myButton">Cancel</button>
+  </div>
+</ng-template>
+
+
+
+
+
+
+<ng-template #addSportModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Sport</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="row">
+          <div class="col-md-12">             
+              <input type="url" class="form-control url-input" placeholder="Sport Name"[(ngModel)]="sportName" [ngModelOptions]="{standalone: true}" required>
+         
+            </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="Add URL" (click)="c('SaveClick')" class="btn-sm myButton" [disabled]="loading || !sportName || ValidSport()">Save</button>
+    </div>
+  </ng-template>
+
+
+  <ng-template #deleteSportModal let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-12">
+                <p class="p-style">
+                  Are you sure, you want to delete this Sport?
+                </p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" title="Delete" (click)="c('SaveClick')" class="btn-sm redButton">Delete</button>
+          <button type="button" title="Cancel" (click)="d('Cancel')" class="btn-sm myButton">Cancel</button>
+      </div>
+    </ng-template>
